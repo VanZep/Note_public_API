@@ -1,14 +1,14 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.mixins import CreateModelMixin, ListModelMixin
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.filters import SearchFilter
 from django.shortcuts import get_object_or_404
 
-from posts.models import Post, Group, Follow
+from posts.models import Post, Group
 from .serializers import (
     PostSerializer, GroupSerializer, CommentSerializer, FollowSerializer
 )
-from .permissions import IsAuthorOrReadOnly
+from .permissions import IsAuthorOrIsAuthenticatedOrReadOnly
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -16,7 +16,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (IsAuthorOrReadOnly, IsAuthenticatedOrReadOnly)
+    permission_classes = (IsAuthorOrIsAuthenticatedOrReadOnly,)
     pagination_class = LimitOffsetPagination
 
     def perform_create(self, serializer):
@@ -28,14 +28,14 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthorOrIsAuthenticatedOrReadOnly,)
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     """Представление комментариев."""
 
     serializer_class = CommentSerializer
-    permission_classes = (IsAuthorOrReadOnly, IsAuthenticatedOrReadOnly)
+    permission_classes = (IsAuthorOrIsAuthenticatedOrReadOnly,)
 
     def get_post(self):
         return get_object_or_404(Post, pk=self.kwargs.get('post_id'))
@@ -47,10 +47,11 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user, post=self.get_post())
 
 
-class FollowViewSet(viewsets.ModelViewSet):
+class FollowCreateListViewSet(
+    CreateModelMixin, ListModelMixin, viewsets.GenericViewSet
+):
     """Представление подписчиков."""
 
-    queryset = Follow.objects.all()
     serializer_class = FollowSerializer
     filter_backends = (SearchFilter,)
     search_fields = ('=following__username',)
