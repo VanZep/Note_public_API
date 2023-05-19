@@ -3,8 +3,8 @@
 ### Описание
 API для социальной сети Yatube
 ### Технологии
-Python 3.7
-Django 3.2.16
+Python 3.7,
+Django 3.2.16,
 djangorestframework 3.12.4
 ### Запуск проекта в dev-режиме
 - Установите виртуальное окружение
@@ -98,4 +98,4 @@ response:
 }
 ```
 ### Автор
-VanZep
+***VanZep***
