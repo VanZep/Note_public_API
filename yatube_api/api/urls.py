@@ -5,6 +5,7 @@ from .views import (
     PostViewSet, GroupViewSet, CommentViewSet, FollowCreateListViewSet
 )
 
+
 app_name = 'api'
 
 router_v1 = DefaultRouter()
