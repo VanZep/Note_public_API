@@ -1,18 +1,18 @@
-# Note_public_API
+# Notetube_API
 ## Социальная сеть для публикации личных дневников
 ### Описание
-REST API для социальной сети Note_public. Авторизация пользователей реализована с помощью библиотеки djoser на JWT-токенах.
+REST API для социальной сети Notetube. Авторизация пользователей реализована с помощью библиотеки djoser на JWT-токенах.
 ### Технологии
 Python 3.7, Django 3.2.16, djangorestframework 3.12.4, djoser 2.1.0
 ### Запуск проекта в dev-режиме
 1. Склонируйте проект к себе на компьютер
 - Для этого из нужной директории в командной строке выполните команду
 ```
-git clone git@github.com:VanZep/Note_public_API.git
+git clone git@github.com:VanZep/Notetube_API.git
 ```
 2. Перейдите в каталог проекта
 ```
-cd Note_public_API
+cd Notetube_API
 ```
 3. Создайте виртуальное окружение
 - Linux/macOS
